@@ -26,7 +26,7 @@ jobs:
           echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" > .env.production
 
       - name: Build
-        run: npm run build && npm run export
+        run: npm run build
 
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
