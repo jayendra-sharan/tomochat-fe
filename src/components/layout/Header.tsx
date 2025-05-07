@@ -11,7 +11,7 @@ export default function Header() {
   
   return (
     <div className="flex items-center justify-between bg-blue-500 h-12 px-10">
-      <p className="text-white">CW</p>
+      <Link href="/" className="font-bold text-white">TomoChat</Link>
       {
         id && 
         <nav className="flex gap-4">
