@@ -58,7 +58,7 @@ export default function ChatWindowBody() {
     return () => {
       socket.emit("leaveRoom", groupId);
     }
-  }, [])
+  }, [groupId, dispatch])
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 

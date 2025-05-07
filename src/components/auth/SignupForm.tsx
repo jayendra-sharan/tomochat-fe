@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -20,7 +22,7 @@ export default function SignupForm() {
     setError("");
 
     // Call your GraphQL mutation here
-    const res = await fetch("http://localhost:3001/graphql", {
+    const res = await fetch(`${apiUrl}/graphql`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

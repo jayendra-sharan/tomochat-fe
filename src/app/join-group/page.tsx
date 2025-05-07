@@ -1,5 +1,3 @@
-// app/join-group/page.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -38,6 +36,7 @@ export default function JoinGroupPage() {
 
       router.push("/dashboard");
     } catch (err) {
+      console.log("Error in joining group", err);
       setError("Something went wrong.");
     }
   };

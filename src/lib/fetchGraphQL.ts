@@ -1,7 +1,10 @@
-export async function fetchGraphQL(query: string, variables: any = {}) {
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+export async function fetchGraphQL(query: string, variables?: object) {
   const token = localStorage.getItem("cw-token");
 
-  const res = await fetch("http://localhost:3001/graphql", {
+  const res = await fetch(`${apiUrl}/graphql`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

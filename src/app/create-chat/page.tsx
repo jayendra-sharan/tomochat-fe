@@ -51,6 +51,10 @@ export default function CreateChatPage() {
     }
   };
 
+  if (error) {
+    console.log("Error", error);
+  }
+
   if (groupDetail.id) {
     return (
       <div className="p-8">
