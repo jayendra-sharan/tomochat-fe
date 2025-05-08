@@ -25,7 +25,6 @@ export default function JoinGroupPage() {
   }
 
   useEffect(() => {
-
     async function joinGroupFromUrl(inviteLink:string) {
       const result = await joinGroup(inviteLink);
       if (result.errors) {
@@ -35,22 +34,16 @@ export default function JoinGroupPage() {
         router.push(`/dashboard`);
       }
     }
-
     if (!inviteId) return;
-
     const token = localStorage.getItem("cw-token");
-
     if (!token) {
       router.replace(`/login?redirectTo=/join-group?invite_id=${inviteId}`);
       return;
     }
-
     if (token) {
       joinGroupFromUrl(inviteId);
     }
-
-
-  }, []);
+  }, [inviteId, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
