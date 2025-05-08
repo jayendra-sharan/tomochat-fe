@@ -24,6 +24,9 @@ export default function ChatWindowBody() {
             id
             content
             createdAt
+            group {
+              name
+            }
             suggestion {
               original
               aiReply
