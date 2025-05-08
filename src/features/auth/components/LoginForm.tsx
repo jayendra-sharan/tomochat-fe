@@ -4,6 +4,7 @@ import { fetchGraphQL } from "@/lib/fetchGraphQL";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUserDataDispatch } from "../context/UserContext";
+import Link from "next/link";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -79,6 +80,10 @@ export default function LoginForm() {
 
         <button className="bg-blue-500 hover:bg-blue-300 p-2 my-2 rounded-lg w-full" type="submit">Login</button>
       </form>
+
+      <div className="mt-10">
+        <Link href="/signup">New user? Click here</Link>
+      </div>
     </div>
   );
 }
