@@ -16,7 +16,6 @@ export default function ChatPage() {
           <ChatWindowInput />
         </div>
       </Suspense>
-
     </ChatProvider>
   );
 }

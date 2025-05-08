@@ -1,13 +1,56 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { fetchGraphQL } from "@/lib/fetchGraphQL";
 
 export default function JoinGroupPage() {
   const [inviteLink, setInviteLink] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const inviteId = searchParams.get("invite_id");
+
+  const joinGroup = async (inviteLink: string) => {
+    return await fetchGraphQL(`
+      mutation JoinGroupByInviteLink($input: JoinGroupByInviteLinkInput!) {
+        joinGroupByInviteLink(input: $input) {
+          id
+          name
+        }
+      }
+    `, {
+      input: { inviteLink }
+    });
+  }
+
+  useEffect(() => {
+
+    async function joinGroupFromUrl(inviteLink:string) {
+      const result = await joinGroup(inviteLink);
+      if (result.errors) {
+        setError(result.errors[0].message);
+        console.log("error");
+      } else {
+        router.push(`/dashboard`);
+      }
+    }
+
+    if (!inviteId) return;
+
+    const token = localStorage.getItem("cw-token");
+
+    if (!token) {
+      router.replace(`/login?redirectTo=/join-group?invite_id=${inviteId}`);
+      return;
+    }
+
+    if (token) {
+      joinGroupFromUrl(inviteId);
+    }
+
+
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,16 +61,7 @@ export default function JoinGroupPage() {
     }
 
     try {
-      const result = await fetchGraphQL(`
-        mutation JoinGroupByInviteLink($input: JoinGroupByInviteLinkInput!) {
-          joinGroupByInviteLink(input: $input) {
-            id
-            name
-          }
-        }
-      `, {
-        input: { inviteLink }
-      });
+      const result = await joinGroup(inviteLink);
 
       if (result.errors) {
         setError(result.errors[0].message);
